@@ -1,265 +1,295 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Chúc mừng Ngày Nhà Giáo Việt Nam 20/11</title>
-  <style>
-    :root{
-      --bg: linear-gradient(135deg,#fff7e6 0%, #ffe6f2 100%);
-      --card:#ffffff;
-      --accent:#ff6b6b;
-      --accent2:#ffb86b;
-      --text:#2b2b2b;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background: var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:30px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Đam Mê Code</title>
+    <style>
+        /* --- CẤU HÌNH CSS --- */
+        :root {
+            --bg-color: #0d1117; /* Màu nền GitHub Dark */
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff; /* Màu xanh dương công nghệ */
+            --code-bg: #161b22;
+            --highlight: #238636; /* Màu xanh lá nút commit */
+            --font-mono: 'Courier New', Courier, monospace;
+        }
 
-    .card{
-      width:min(980px,95%);
-      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
-      border-radius:20px;
-      box-shadow:0 12px 40px rgba(43,43,43,0.12);
-      padding:30px;
-      position:relative;
-      overflow:hidden;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header{
-      display:flex;
-      gap:20px;
-      align-items:center;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-mono); /* Phông chữ kiểu Code */
+            line-height: 1.6;
+        }
 
-    .logo{
-      flex:0 0 120px;
-      height:120px;
-      border-radius:16px;
-      background: conic-gradient(from 180deg at 50% 50%, var(--accent), var(--accent2));
-      display:grid;
-      place-items:center;
-      color:white;
-      font-weight:700;
-      font-size:22px;
-      transform:rotate(-6deg);
-      box-shadow:0 8px 20px rgba(0,0,0,0.08);
-    }
+        /* --- THANH ĐIỀU HƯỚNG --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background-color: var(--code-bg);
+            border-bottom: 1px solid #30363d;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .title{
-      flex:1;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
 
-    h1{
-      margin:0 0 6px 0;
-      font-size:28px;
-      letter-spacing:0.4px;
-    }
-    p.lead{
-      margin:0;
-      color: #5a5a5a;
-      font-size:15px;
-    }
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
 
-    .ribbon{
-      position:absolute;
-      right:-80px;
-      top:20px;
-      width:300px;
-      transform:rotate(25deg);
-      text-align:center;
-      font-weight:700;
-      color:white;
-      padding:8px 0;
-      border-radius:6px;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      box-shadow:0 8px 18px rgba(0,0,0,0.12);
-    }
+        .nav-links a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
 
-    .content{
-      display:grid;
-      grid-template-columns:1fr 320px;
-      gap:24px;
-      margin-top:22px;
-      align-items:start;
-    }
+        /* --- PHẦN HERO (GIỚI THIỆU) --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
 
-    .message{
-      padding:18px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,248,240,0.6));
-      border-radius:12px;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
-      line-height:1.6;
-      font-size:16px;
-    }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
 
-    .cta{
-      margin-top:16px;
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      padding:10px 16px;
-      border-radius:10px;
-      border:0;
-      cursor:pointer;
-      font-weight:700;
-      box-shadow:0 6px 18px rgba(0,0,0,0.08);
-    }
-    .btn-primary{background:linear-gradient(90deg,var(--accent),#ff3b6b); color:white}
-    .btn-ghost{background:transparent; border:2px solid rgba(43,43,43,0.06)}
+        .hero span {
+            color: var(--accent-color);
+        }
 
-    .side-card{
-      background:rgba(255,255,255,0.9);
-      padding:18px;
-      border-radius:12px;
-      box-shadow:0 8px 24px rgba(43,43,43,0.06);
-      text-align:center;
-    }
-    .big-number{
-      font-size:42px;
-      font-weight:800;
-      color:var(--accent);
-      margin:0 0 10px 0;
-    }
+        .typing-text {
+            font-size: 1.5rem;
+            color: var(--highlight);
+            min-height: 1.6em; /* Giữ chỗ để không bị nhảy layout */
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            background-color: var(--highlight);
+            animation: blink 1s infinite;
+        }
 
-    /* Confetti */
-    .confetti-wrap{pointer-events:none; position:absolute; inset:0; overflow:hidden}
-    .confetti{
-      position:absolute;
-      width:12px;height:12px;
-      opacity:0.95;
-      transform-origin:center;
-      animation:fall linear infinite;
-    }
-    @keyframes fall{
-      0%{transform:translateY(-10vh) rotate(0deg); opacity:1}
-      100%{transform:translateY(120vh) rotate(720deg); opacity:0.9}
-    }
+        /* --- CÁC SECTION CHUNG --- */
+        section {
+            padding: 60px 10%;
+        }
 
-    /* Responsive */
-    @media (max-width:880px){
-      .content{grid-template-columns:1fr;}
-      .logo{display:none}
-      .side-card{order:2}
-    }
-  </style>
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        /* --- KỸ NĂNG (SKILLS) --- */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .skill-tag {
+            background-color: var(--code-bg);
+            padding: 10px 20px;
+            border: 1px solid #30363d;
+            border-radius: 5px;
+            cursor: default;
+            transition: transform 0.2s;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        /* --- DỰ ÁN (PROJECTS) --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background-color: var(--code-bg);
+            padding: 20px;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+        }
+
+        .project-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background-color: #21262d;
+            color: var(--accent-color);
+            text-decoration: none;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background-color: #30363d;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--code-bg);
+            border-top: 1px solid #30363d;
+            font-size: 0.9rem;
+            color: #8b949e;
+        }
+
+        /* --- ANIMATION --- */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; } /* Ẩn menu trên mobile cho đơn giản */
+        }
+    </style>
 </head>
 <body>
-  <div class="card" role="region" aria-label="Thiệp chúc mừng 20 tháng 11">
-    <div class="ribbon">Chúc mừng 20/11</div>
-    <header>
-      <div class="logo">20/11</div>
-      <div class="title">
-        <h1>Chúc mừng Ngày Nhà Giáo Việt Nam</h1>
-        <p class="lead">Gửi đến thầy cô - những người dẫn lối, truyền cảm hứng và dìu dắt chúng ta.</p>
-      </div>
+
+    <nav>
+        <div class="logo">&lt;DevName /&gt;</div>
+        <div class="nav-links">
+            <a href="#about">Giới thiệu</a>
+            <a href="#skills">Kỹ năng</a>
+            <a href="#projects">Dự án</a>
+            <a href="#contact">Liên hệ</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Xin chào, tôi là <span>[Tên Của Bạn]</span></h1>
+        <p>
+            <span class="typing-text"></span><span class="cursor">&nbsp;</span>
+        </p>
     </header>
 
-    <div class="content">
-      <div>
-        <div class="message">
-          <p><strong>Thân gửi Thầy/Cô,</strong></p>
-          <p>Trong từng con chữ, từng bài giảng, thầy cô đã gieo vào lòng chúng em niềm tin, tri thức và tình thương. Chúng em xin gửi lời cảm ơn chân thành nhất vì những nỗ lực thầm lặng và những lần dẫn đường kiên nhẫn.</p>
-          <p>Chúc thầy cô mạnh khỏe, tràn đầy năng lượng và tiếp tục lan tỏa ngọn lửa tri thức cho nhiều thế hệ học trò hơn nữa.</p>
+    <section id="about">
+        <h2>01. Giới thiệu</h2>
+        <p>
+            Tôi là một lập trình viên đam mê biến những dòng mã phức tạp thành các giải pháp thực tế. 
+            Thế giới công nghệ luôn thay đổi, và tôi luôn sẵn sàng học hỏi những điều mới mẻ (New Technologies).
+            <br><br>
+            <i>"Eat. Sleep. Code. Repeat."</i>
+        </p>
+    </section>
 
-          <div class="cta">
-            <button class="btn btn-primary" onclick="startConfetti()">Bật pháo giấy</button>
-            <button class="btn btn-ghost" onclick="downloadCard()">Tải thiệp (PNG)</button>
-          </div>
+    <section id="skills">
+        <h2>02. Tech Stack</h2>
+        <div class="skills-grid">
+            <div class="skill-tag">HTML5 & CSS3</div>
+            <div class="skill-tag">JavaScript (ES6+)</div>
+            <div class="skill-tag">ReactJS / VueJS</div>
+            <div class="skill-tag">Node.js</div>
+            <div class="skill-tag">Python</div>
+            <div class="skill-tag">Git & GitHub</div>
+            <div class="skill-tag">SQL / MongoDB</div>
         </div>
-      </div>
+    </section>
 
-      <aside class="side-card">
-        <div class="big-number">20 / 11</div>
-        <div>Ngày Nhà Giáo Việt Nam</div>
-        <hr style="margin:12px 0;border:none;border-top:1px solid #f0f0f0">
-        <div style="font-size:13px;color:#666">Hãy chia sẻ lời chúc này tới thầy cô của bạn ❤️</div>
-      </aside>
-    </div>
+    <section id="projects">
+        <h2>03. Dự án tiêu biểu</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Website Thương mại điện tử</h3>
+                <p>Xây dựng hệ thống bán hàng full-stack với tính năng giỏ hàng và thanh toán.</p>
+                <a href="#" class="btn">Xem Code &rarr;</a>
+            </div>
+            <div class="project-card">
+                <h3>Chat App Realtime</h3>
+                <p>Ứng dụng nhắn tin thời gian thực sử dụng Socket.io và Firebase.</p>
+                <a href="#" class="btn">Xem Code &rarr;</a>
+            </div>
+            <div class="project-card">
+                <h3>Tool Tự động hóa</h3>
+                <p>Script Python giúp tự động hóa các tác vụ văn phòng hàng ngày.</p>
+                <a href="#" class="btn">Xem Code &rarr;</a>
+            </div>
+        </div>
+    </section>
 
-    <div class="confetti-wrap" id="confetti"></div>
-  </div>
+    <section id="contact">
+        <h2>04. Kết nối</h2>
+        <p>Bạn có ý tưởng thú vị? Hãy cùng nhau biến nó thành hiện thực.</p>
+        <br>
+        <a href="mailto:email@example.com" class="btn">Gửi Email cho tôi</a>
+        <a href="https://github.com/username" class="btn">GitHub Profile</a>
+    </section>
 
-  <script>
-    // Tạo confetti - đơn giản, không dùng thư viện
-    const confettiWrap = document.getElementById('confetti');
-    let confettiTimer=null;
+    <footer>
+        <p>Được xây dựng bằng 💻 và ☕ bởi [Tên Của Bạn].</p>
+    </footer>
 
-    function rand(min,max){return Math.random()*(max-min)+min}
+    <script>
+        const textElement = document.querySelector(".typing-text");
+        const texts = [
+            "Lập trình viên Full-stack.", 
+            "Người yêu thích Open Source.", 
+            "Chuyên gia giải quyết vấn đề."
+        ];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
 
-    function makePiece(){
-      const el = document.createElement('div');
-      el.className='confetti';
-      const size = Math.floor(rand(8,16));
-      el.style.width = size+'px';
-      el.style.height = size+'px';
-      el.style.left = rand(-5,105)+'%';
-      el.style.top = '-10vh';
-      el.style.background = `hsl(${Math.floor(rand(0,360))},70%,60%)`;
-      el.style.borderRadius = Math.random()>0.6? '2px':'50%';
-      el.style.animationDuration = rand(3.5,6)+'s';
-      el.style.opacity = Math.random()*0.9+0.1;
-      confettiWrap.appendChild(el);
-      setTimeout(()=>{ el.remove() }, 7000);
-    }
+        (function type() {
+            if (count === texts.length) {
+                count = 0;
+            }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
 
-    function startConfetti(){
-      if(confettiTimer) return;
-      // tạo liên tục trong 2.5s
-      const end = Date.now()+2500;
-      confettiTimer = setInterval(()=>{
-        for(let i=0;i<8;i++) makePiece();
-        if(Date.now()>end){ clearInterval(confettiTimer); confettiTimer=null }
-      },120);
-    }
+            textElement.textContent = letter;
 
-    // Tải thiệp: chụp vùng .card bằng canvas -> export PNG (không dùng thư viện lớn)
-    async function downloadCard(){
-      // Sử dụng API toDataURL từ SVG foreignObject trick
-      const card = document.querySelector('.card');
-      const width = card.offsetWidth;
-      const height = card.offsetHeight;
-      const clone = card.cloneNode(true);
-      clone.style.transform='none';
-      clone.style.margin='0';
+            if (letter.length === currentText.length) {
+                setTimeout(() => {
+                    // Hiệu ứng xóa chữ (ngược lại) nếu muốn, 
+                    // hoặc chỉ cần reset index để gõ câu tiếp theo
+                    count++;
+                    index = 0;
+                }, 2000); // Đợi 2 giây trước khi chuyển câu
+            }
 
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${width}' height='${height}'>
-        <foreignObject width='100%' height='100%'>
-          ${new XMLSerializer().serializeToString(clone).replaceAll('#','%23')}
-        </foreignObject>
-      </svg>`;
-
-      const blob = new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
-      const url = URL.createObjectURL(blob);
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = width*2; canvas.height = height*2; // scale for quality
-        const ctx = canvas.getContext('2d');
-        ctx.scale(2,2);
-        ctx.drawImage(img,0,0);
-        URL.revokeObjectURL(url);
-        canvas.toBlob((b)=>{
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(b);
-          a.download = 'thiệp-20-11.png';
-          a.click();
-        });
-      };
-      img.crossOrigin='anonymous';
-      img.src = url;
-    }
-  </script>
+            setTimeout(type, 100); // Tốc độ gõ
+        })();
+    </script>
 </body>
 </html>
