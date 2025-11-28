@@ -3,211 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🎂</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <title>Lưu Bút Google Sheets</title>
     <style>
-        /* --- CẤU HÌNH CƠ BẢN --- */
-        :root {
-            --bg-color: #1a1a1a;
-            --text-color: #fff;
-            --accent-color: #ff4081; /* Màu hồng neon */
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            overflow: hidden; /* Ngăn cuộn trang */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        /* --- MÀN HÌNH HỘP QUÀ (LÚC ĐẦU) --- */
-        #gift-container {
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .gift-box {
-            font-size: 8rem; /* Kích thước hộp quà */
-            animation: shake 2s infinite; /* Hiệu ứng rung */
-            user-select: none;
-        }
-
-        .click-hint {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #888;
-            animation: fade 1.5s infinite alternate;
-        }
-
-        /* --- MÀN HÌNH CHÚC MỪNG (LÚC SAU) --- */
-        #party-container {
-            display: none; /* Ẩn đi lúc đầu */
-            flex-direction: column;
-            align-items: center;
-            width: 90%;
-            max-width: 600px;
-            z-index: 10;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
-        }
-
-        .message {
-            font-size: 1.5rem;
-            line-height: 1.6;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            min-height: 150px; /* Giữ khung không bị nhảy */
-        }
-
-        .photo-frame {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background-color: #333;
-            margin-bottom: 20px;
-            border: 5px solid var(--accent-color);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 20px var(--accent-color);
-        }
-        
-        /* Placeholder cho ảnh (nếu chưa có ảnh thật) */
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- HIỆU ỨNG ANIMATION --- */
-        @keyframes shake {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(5deg); }
-            50% { transform: rotate(0deg); }
-            75% { transform: rotate(-5deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        @keyframes fade {
-            from { opacity: 0.5; }
-            to { opacity: 1; }
-        }
-
-        @keyframes popIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 600px) {
-            .gift-box { font-size: 6rem; }
-            h1 { font-size: 2.5rem; }
-            .message { font-size: 1.1rem; }
-            .photo-frame { width: 150px; height: 150px; }
-        }
+        body { font-family: sans-serif; background: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 350px; }
+        h2 { text-align: center; color: #2a9d8f; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #2a9d8f; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #21867a; }
+        button:disabled { background: #ccc; }
     </style>
 </head>
 <body>
 
-    <div id="gift-container" onclick="openGift()">
-        <div class="gift-box">🎁</div>
-        <p class="click-hint">(Chạm vào hộp quà để mở)</p>
+    <div class="card">
+        <h2>📒 Lưu Bút Online</h2>
+        <form id="myForm">
+            <input type="text" name="name" placeholder="Tên của bạn" required>
+            <textarea name="message" rows="4" placeholder="Viết gì đó..." required></textarea>
+            <button type="submit" id="btnSubmit">Gửi đi</button>
+        </form>
     </div>
-
-    <div id="party-container">
-        <div class="photo-frame">
-            <img src="https://ui-avatars.com/api/?name=Happy+Birthday&background=ff4081&color=fff&size=200" alt="Birthday Photo" id="avatar">
-        </div>
-        
-        <h1 id="heading">Chúc Mừng!</h1>
-        <p class="message" id="typing-text"></p>
-    </div>
-
-    <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        Trình duyệt của bạn không hỗ trợ phát nhạc.
-    </audio>
 
     <script>
-        // Nội dung lời chúc (Bạn hãy sửa lại ở đây)
-        const greetingText = "Chúc mừng sinh nhật [Tên bạn bè]! 🎂\n\nChúc bạn tuổi mới luôn vui vẻ, thành công và code ngày càng 'bá đạo'. Mong rằng mọi điều ước của bạn sẽ thành hiện thực! \n\nBest wishes, [Tên bạn].";
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwEzpC8WVAeqI_cXP7Twfl6Shu3nlSE09vMPcZTgaK3_EOdaNebJqoFMl0eE4soE-SM/exec';
+        const form = document.forms['myForm'];
+        const btn = document.getElementById('btnSubmit');
 
-        function openGift() {
-            const giftContainer = document.getElementById('gift-container');
-            const partyContainer = document.getElementById('party-container');
-            const music = document.getElementById('bg-music');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerHTML = "Đang gửi...";
 
-            // 1. Ẩn hộp quà, hiện lời chúc
-            giftContainer.style.display = 'none';
-            partyContainer.style.display = 'flex';
-            partyContainer.style.animation = 'popIn 1s ease forwards';
+            // Tạo data gửi đi
+            const formData = new FormData(form);
 
-            // 2. Phát nhạc (Cần tương tác người dùng mới chạy được)
-            music.volume = 0.5; // Âm lượng 50%
-            music.play().catch(error => console.log("Không thể phát nhạc tự động: ", error));
-
-            // 3. Bắn pháo hoa (Confetti effect)
-            fireConfetti();
-
-            // 4. Chạy hiệu ứng gõ chữ
-            typeWriter(greetingText, 0);
-        }
-
-        // Hàm bắn pháo hoa
-        function fireConfetti() {
-            const duration = 3000; // Kéo dài 3 giây
-            const end = Date.now() + duration;
-
-            (function frame() {
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: ['#ff4081', '#3f51b5', '#ffeb3b'] // Màu sắc pháo hoa
+            fetch(scriptURL, { method: 'POST', body: formData})
+                .then(response => { 
+                    alert("✅ Đã lưu vào Google Sheet thành công!");
+                    form.reset();
+                    btn.disabled = false;
+                    btn.innerHTML = "Gửi đi";
+                })
+                .catch(error => {
+                    alert("❌ Lỗi! Chưa gửi được.");
+                    console.error('Error!', error.message);
+                    btn.disabled = false;
+                    btn.innerHTML = "Thử lại";
                 });
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: ['#ff4081', '#3f51b5', '#ffeb3b']
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
-        }
-
-        // Hàm gõ chữ (Typing effect)
-        function typeWriter(text, i) {
-            const element = document.getElementById("typing-text");
-            if (i < text.length) {
-                // Xử lý xuống dòng
-                if (text.charAt(i) === '\n') {
-                    element.innerHTML += '<br>';
-                } else {
-                    element.innerHTML += text.charAt(i);
-                }
-                setTimeout(() => typeWriter(text, i + 1), 50); // Tốc độ gõ 50ms
-            }
-        }
+        });
     </script>
+
 </body>
 </html>
