@@ -3,293 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Đam Mê Code</title>
+    <title>Happy Birthday! 🎂</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        /* --- CẤU HÌNH CSS --- */
+        /* --- CẤU HÌNH CƠ BẢN --- */
         :root {
-            --bg-color: #0d1117; /* Màu nền GitHub Dark */
-            --text-color: #c9d1d9;
-            --accent-color: #58a6ff; /* Màu xanh dương công nghệ */
-            --code-bg: #161b22;
-            --highlight: #238636; /* Màu xanh lá nút commit */
-            --font-mono: 'Courier New', Courier, monospace;
+            --bg-color: #1a1a1a;
+            --text-color: #fff;
+            --accent-color: #ff4081; /* Màu hồng neon */
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: var(--font-mono); /* Phông chữ kiểu Code */
-            line-height: 1.6;
-        }
-
-        /* --- THANH ĐIỀU HƯỚNG --- */
-        nav {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Ngăn cuộn trang */
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 10%;
-            background-color: var(--code-bg);
-            border-bottom: 1px solid #30363d;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin-left: 20px;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-            text-decoration: underline;
-        }
-
-        /* --- PHẦN HERO (GIỚI THIỆU) --- */
-        .hero {
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
+        /* --- MÀN HÌNH HỘP QUÀ (LÚC ĐẦU) --- */
+        #gift-container {
+            cursor: pointer;
+            transition: transform 0.3s;
         }
 
-        .hero span {
+        .gift-box {
+            font-size: 8rem; /* Kích thước hộp quà */
+            animation: shake 2s infinite; /* Hiệu ứng rung */
+            user-select: none;
+        }
+
+        .click-hint {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #888;
+            animation: fade 1.5s infinite alternate;
+        }
+
+        /* --- MÀN HÌNH CHÚC MỪNG (LÚC SAU) --- */
+        #party-container {
+            display: none; /* Ẩn đi lúc đầu */
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 3.5rem;
             color: var(--accent-color);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
         }
 
-        .typing-text {
+        .message {
             font-size: 1.5rem;
-            color: var(--highlight);
-            min-height: 1.6em; /* Giữ chỗ để không bị nhảy layout */
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: 150px; /* Giữ khung không bị nhảy */
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #333;
+            margin-bottom: 20px;
+            border: 5px solid var(--accent-color);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px var(--accent-color);
         }
         
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            background-color: var(--highlight);
-            animation: blink 1s infinite;
+        /* Placeholder cho ảnh (nếu chưa có ảnh thật) */
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        /* --- CÁC SECTION CHUNG --- */
-        section {
-            padding: 60px 10%;
+        /* --- HIỆU ỨNG ANIMATION --- */
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
         }
 
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            border-left: 5px solid var(--accent-color);
-            padding-left: 15px;
+        @keyframes fade {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
         }
 
-        /* --- KỸ NĂNG (SKILLS) --- */
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .skill-tag {
-            background-color: var(--code-bg);
-            padding: 10px 20px;
-            border: 1px solid #30363d;
-            border-radius: 5px;
-            cursor: default;
-            transition: transform 0.2s;
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
-        }
-
-        /* --- DỰ ÁN (PROJECTS) --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .project-card {
-            background-color: var(--code-bg);
-            padding: 20px;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-        }
-
-        .project-card h3 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 8px 16px;
-            background-color: #21262d;
-            color: var(--accent-color);
-            text-decoration: none;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-
-        .btn:hover {
-            background-color: #30363d;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: var(--code-bg);
-            border-top: 1px solid #30363d;
-            font-size: 0.9rem;
-            color: #8b949e;
-        }
-
-        /* --- ANIMATION --- */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .nav-links { display: none; } /* Ẩn menu trên mobile cho đơn giản */
+        @media (max-width: 600px) {
+            .gift-box { font-size: 6rem; }
+            h1 { font-size: 2.5rem; }
+            .message { font-size: 1.1rem; }
+            .photo-frame { width: 150px; height: 150px; }
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">&lt;DevName /&gt;</div>
-        <div class="nav-links">
-            <a href="#about">Giới thiệu</a>
-            <a href="#skills">Kỹ năng</a>
-            <a href="#projects">Dự án</a>
-            <a href="#contact">Liên hệ</a>
+    <div id="gift-container" onclick="openGift()">
+        <div class="gift-box">🎁</div>
+        <p class="click-hint">(Chạm vào hộp quà để mở)</p>
+    </div>
+
+    <div id="party-container">
+        <div class="photo-frame">
+            <img src="https://ui-avatars.com/api/?name=Happy+Birthday&background=ff4081&color=fff&size=200" alt="Birthday Photo" id="avatar">
         </div>
-    </nav>
+        
+        <h1 id="heading">Chúc Mừng!</h1>
+        <p class="message" id="typing-text"></p>
+    </div>
 
-    <header class="hero">
-        <h1>Xin chào, tôi là <span>[Tên Của Bạn]</span></h1>
-        <p>
-            <span class="typing-text"></span><span class="cursor">&nbsp;</span>
-        </p>
-    </header>
-
-    <section id="about">
-        <h2>01. Giới thiệu</h2>
-        <p>
-            Tôi là một lập trình viên đam mê biến những dòng mã phức tạp thành các giải pháp thực tế. 
-            Thế giới công nghệ luôn thay đổi, và tôi luôn sẵn sàng học hỏi những điều mới mẻ (New Technologies).
-            <br><br>
-            <i>"Eat. Sleep. Code. Repeat."</i>
-        </p>
-    </section>
-
-    <section id="skills">
-        <h2>02. Tech Stack</h2>
-        <div class="skills-grid">
-            <div class="skill-tag">HTML5 & CSS3</div>
-            <div class="skill-tag">JavaScript (ES6+)</div>
-            <div class="skill-tag">ReactJS / VueJS</div>
-            <div class="skill-tag">Node.js</div>
-            <div class="skill-tag">Python</div>
-            <div class="skill-tag">Git & GitHub</div>
-            <div class="skill-tag">SQL / MongoDB</div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <h2>03. Dự án tiêu biểu</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h3>Website Thương mại điện tử</h3>
-                <p>Xây dựng hệ thống bán hàng full-stack với tính năng giỏ hàng và thanh toán.</p>
-                <a href="#" class="btn">Xem Code &rarr;</a>
-            </div>
-            <div class="project-card">
-                <h3>Chat App Realtime</h3>
-                <p>Ứng dụng nhắn tin thời gian thực sử dụng Socket.io và Firebase.</p>
-                <a href="#" class="btn">Xem Code &rarr;</a>
-            </div>
-            <div class="project-card">
-                <h3>Tool Tự động hóa</h3>
-                <p>Script Python giúp tự động hóa các tác vụ văn phòng hàng ngày.</p>
-                <a href="#" class="btn">Xem Code &rarr;</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2>04. Kết nối</h2>
-        <p>Bạn có ý tưởng thú vị? Hãy cùng nhau biến nó thành hiện thực.</p>
-        <br>
-        <a href="mailto:email@example.com" class="btn">Gửi Email cho tôi</a>
-        <a href="https://github.com/username" class="btn">GitHub Profile</a>
-    </section>
-
-    <footer>
-        <p>Được xây dựng bằng 💻 và ☕ bởi [Tên Của Bạn].</p>
-    </footer>
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
 
     <script>
-        const textElement = document.querySelector(".typing-text");
-        const texts = [
-            "Lập trình viên Full-stack.", 
-            "Người yêu thích Open Source.", 
-            "Chuyên gia giải quyết vấn đề."
-        ];
-        let count = 0;
-        let index = 0;
-        let currentText = "";
-        let letter = "";
+        // Nội dung lời chúc (Bạn hãy sửa lại ở đây)
+        const greetingText = "Chúc mừng sinh nhật [Tên bạn bè]! 🎂\n\nChúc bạn tuổi mới luôn vui vẻ, thành công và code ngày càng 'bá đạo'. Mong rằng mọi điều ước của bạn sẽ thành hiện thực! \n\nBest wishes, [Tên bạn].";
 
-        (function type() {
-            if (count === texts.length) {
-                count = 0;
+        function openGift() {
+            const giftContainer = document.getElementById('gift-container');
+            const partyContainer = document.getElementById('party-container');
+            const music = document.getElementById('bg-music');
+
+            // 1. Ẩn hộp quà, hiện lời chúc
+            giftContainer.style.display = 'none';
+            partyContainer.style.display = 'flex';
+            partyContainer.style.animation = 'popIn 1s ease forwards';
+
+            // 2. Phát nhạc (Cần tương tác người dùng mới chạy được)
+            music.volume = 0.5; // Âm lượng 50%
+            music.play().catch(error => console.log("Không thể phát nhạc tự động: ", error));
+
+            // 3. Bắn pháo hoa (Confetti effect)
+            fireConfetti();
+
+            // 4. Chạy hiệu ứng gõ chữ
+            typeWriter(greetingText, 0);
+        }
+
+        // Hàm bắn pháo hoa
+        function fireConfetti() {
+            const duration = 3000; // Kéo dài 3 giây
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff4081', '#3f51b5', '#ffeb3b'] // Màu sắc pháo hoa
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff4081', '#3f51b5', '#ffeb3b']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        // Hàm gõ chữ (Typing effect)
+        function typeWriter(text, i) {
+            const element = document.getElementById("typing-text");
+            if (i < text.length) {
+                // Xử lý xuống dòng
+                if (text.charAt(i) === '\n') {
+                    element.innerHTML += '<br>';
+                } else {
+                    element.innerHTML += text.charAt(i);
+                }
+                setTimeout(() => typeWriter(text, i + 1), 50); // Tốc độ gõ 50ms
             }
-            currentText = texts[count];
-            letter = currentText.slice(0, ++index);
-
-            textElement.textContent = letter;
-
-            if (letter.length === currentText.length) {
-                setTimeout(() => {
-                    // Hiệu ứng xóa chữ (ngược lại) nếu muốn, 
-                    // hoặc chỉ cần reset index để gõ câu tiếp theo
-                    count++;
-                    index = 0;
-                }, 2000); // Đợi 2 giây trước khi chuyển câu
-            }
-
-            setTimeout(type, 100); // Tốc độ gõ
-        })();
+        }
     </script>
 </body>
 </html>
