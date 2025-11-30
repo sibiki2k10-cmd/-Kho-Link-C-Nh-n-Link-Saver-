@@ -24,15 +24,19 @@
         .btn-add-folder:hover { background: var(--accent); transform: scale(1.1); }
 
         #folder-list { flex: 1; overflow-y: auto; padding-right: 5px; }
-        /* Scrollbar cho sidebar */
         #folder-list::-webkit-scrollbar { width: 4px; }
         #folder-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
 
-        .menu-item { padding: 12px 15px; margin-bottom: 5px; cursor: pointer; border-radius: 12px; transition: 0.2s; display: flex; align-items: center; justify-content: space-between; color: rgba(255,255,255,0.8); font-weight: 600; font-size: 0.95rem; }
+        .menu-item { padding: 12px 15px; margin-bottom: 5px; cursor: pointer; border-radius: 12px; transition: 0.2s; display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.8); font-weight: 600; font-size: 0.95rem; }
         .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.25); color: white; transform: translateX(5px); }
-        .del-folder { opacity: 0; font-size: 0.8rem; color: #ff6b81; transition: 0.2s; padding: 5px; }
-        .menu-item:hover .del-folder { opacity: 1; }
-        .del-folder:hover { transform: scale(1.2); }
+        .folder-actions { margin-left: auto; display: flex; gap: 5px; opacity: 0; transition: 0.2s; }
+        .menu-item:hover .folder-actions { opacity: 1; }
+        .fa-icon-btn { font-size: 0.8rem; cursor: pointer; padding: 4px; transition: 0.2s; }
+        .fa-icon-btn:hover { transform: scale(1.2); color: white; }
+        .fa-icon-btn.del:hover { color: #ff6b81; }
+
+        .f-icon { width: 20px; height: 20px; object-fit: contain; display: flex; align-items: center; justify-content: center; font-style: normal; }
+        .f-icon img { width: 100%; height: 100%; border-radius: 4px; }
 
         .user-panel { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.15); display: flex; justify-content: space-between; align-items: center; }
 
@@ -43,7 +47,6 @@
         .search-box input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 30px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; outline: none; transition: 0.3s; }
         .search-box input:focus { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); }
         .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); opacity: 0.7; }
-        
         .btn-add { background: linear-gradient(135deg, #fff, #f0f0f0); color: #e73c7e; border: none; padding: 12px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; }
         .btn-add:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
 
@@ -51,13 +54,12 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; padding-bottom: 50px; }
         .card { padding: 20px; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.25); }
-        
         .card-header { display: flex; gap: 15px; margin-bottom: 15px; }
-        .card-icon { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; background: white; padding: 2px; }
+        .card-icon { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; background: white; padding: 2px; flex-shrink: 0; }
+        .card-emoji { width: 50px; height: 50px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
         .card-title { font-weight: 700; font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-tag { font-size: 0.75rem; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 15px; margin-top: 5px; display: inline-block; }
         .card-desc { font-size: 0.9rem; opacity: 0.8; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 2.8em; }
-        
         .card-actions { margin-top: auto; display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
         .action-btn { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; width: 30px; height: 30px; border-radius: 50%; transition: 0.2s; }
         .action-btn:hover { color: white; background: rgba(255,255,255,0.2); }
@@ -68,13 +70,12 @@
         .overlay.active { opacity: 1; pointer-events: all; }
         .modal { background: white; color: #333; width: 450px; padding: 30px; border-radius: 20px; transform: scale(0.9); transition: 0.3s; max-width: 90vw; }
         .overlay.active .modal { transform: scale(1); }
-        
         .inp-group { margin-bottom: 15px; }
-        .inp { width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px; font-size: 1rem; outline: none; }
+        .inp-label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #666; }
+        .inp { width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 8px; font-size: 1rem; outline: none; }
         .inp:focus { border-color: var(--accent); }
         .btn-primary { width: 100%; padding: 12px; background: linear-gradient(135deg, #e73c7e, #ee7752); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
-
         #toast { position: fixed; bottom: 30px; right: 30px; background: rgba(0,0,0,0.9); color: white; padding: 12px 25px; border-radius: 30px; transform: translateY(100px); transition: 0.3s; z-index: 2000; }
         #toast.show { transform: translateY(0); }
 
@@ -102,20 +103,16 @@
 
     <div class="sidebar glass" id="sidebar">
         <div class="brand"><i class="fas fa-meteor"></i> Link Space</div>
-        
         <div class="menu-item active" onclick="app.filter('all', this)" style="margin-bottom: 20px;">
-            <span><i class="fas fa-globe" style="width:20px"></i> Tất cả</span>
+            <span class="f-icon">🌎</span> <span>Tất cả</span>
         </div>
-
         <div class="folder-header">
             <span>THƯ MỤC</span>
             <button class="btn-add-folder" onclick="app.createFolder()" title="Tạo thư mục mới"><i class="fas fa-plus"></i></button>
         </div>
-
         <div id="folder-list">
             <p style="text-align:center; opacity:0.6; font-size:0.8rem">Đang tải...</p>
         </div>
-
         <div class="user-panel">
             <div style="display:flex; align-items:center; gap:10px">
                 <div style="width:30px; height:30px; background:rgba(255,255,255,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center"><i class="fas fa-user-astronaut"></i></div>
@@ -134,26 +131,42 @@
             </div>
             <button class="btn-add" onclick="app.openModal()"><i class="fas fa-plus"></i><span>Thêm link</span></button>
         </div>
-        
         <div onclick="document.getElementById('sidebar').classList.remove('open')" style="position:fixed; top:0; left:0; right:0; bottom:0; z-index:90; display:none;" id="sidebar-overlay"></div>
-
         <div class="grid" id="grid"></div>
     </div>
 
     <div id="modal-overlay" class="overlay">
         <div class="modal">
             <h2 id="modal-title" style="margin-top:0;">Thêm Link Mới</h2>
-            <div class="inp-group" style="display:flex; gap:10px">
-                <input type="text" id="inp-url" class="inp" placeholder="URL (https://...)" onchange="app.fetchMeta()">
-                <button onclick="app.fetchMeta()" class="btn-primary" style="width:50px; display:flex; align-items:center; justify-content:center">⚡</button>
-            </div>
-            <div class="inp-group"><input type="text" id="inp-title" class="inp" placeholder="Tiêu đề"></div>
+            
             <div class="inp-group">
-                <select id="inp-cate" class="inp">
-                    </select>
+                <label class="inp-label">Đường dẫn Website</label>
+                <div style="display:flex; gap:10px">
+                    <input type="text" id="inp-url" class="inp" placeholder="URL (https://...)" onchange="app.fetchMeta()">
+                    <button onclick="app.fetchMeta()" class="btn-primary" style="width:50px; display:flex; align-items:center; justify-content:center">⚡</button>
+                </div>
             </div>
-            <div class="inp-group"><textarea id="inp-desc" class="inp" rows="3" placeholder="Mô tả..."></textarea></div>
-            <input type="hidden" id="inp-icon"><input type="hidden" id="inp-row">
+
+            <div class="inp-group" style="display:flex; gap:10px">
+                <div style="flex:1">
+                     <label class="inp-label">Tiêu đề</label>
+                     <input type="text" id="inp-title" class="inp" placeholder="Tiêu đề trang">
+                </div>
+                <div style="width: 80px;">
+                    <label class="inp-label">Icon</label>
+                    <input type="text" id="inp-icon" class="inp" placeholder="Emo/Url">
+                </div>
+            </div>
+
+            <div class="inp-group">
+                <label class="inp-label">Thư mục</label>
+                <select id="inp-cate" class="inp"></select>
+            </div>
+
+            <div class="inp-group">
+                <textarea id="inp-desc" class="inp" rows="2" placeholder="Mô tả ngắn..."></textarea>
+            </div>
+            <input type="hidden" id="inp-row">
             
             <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
                 <button onclick="document.getElementById('modal-overlay').classList.remove('active')" style="background:#eee; color:#333; padding:10px 20px; border:none; border-radius:10px; cursor:pointer">Hủy</button>
@@ -165,8 +178,8 @@
     <div id="toast">Thông báo</div>
 
     <script>
-        // --- CẤU HÌNH: THAY LINK CỦA BẠN VÀO ĐÂY ---
-        const API = 'https://script.google.com/macros/s/AKfycbxWJbR-UMJhqRqycvNvxxtC-7SFaKyFEyXG0SXAXjuZzGjwlTfMydkeHCEJaRb8Wrv-/exec'; 
+        // --- THAY LINK API CỦA BẠN VÀO ĐÂY ---
+        const API = 'https://script.google.com/macros/s/AKfycbxkDOP8_usccivV9_dXb2yADY9nG1KTEhw4i7dbziCZZsVtOmYinGfPHrU3SmYWo-W9/exec'; 
 
         const app = {
             links: [], folders: [], userMDD: '', isEdit: false,
@@ -174,7 +187,6 @@
             login: function() {
                 const u = document.getElementById('u').value, p = document.getElementById('p').value;
                 const btn = document.querySelector('#login-overlay button'); btn.innerText = "Connecting..."; btn.disabled = true;
-                
                 const fd = new FormData(); fd.append('action', 'login'); fd.append('user', u); fd.append('pass', p);
                 fetch(API, {method:'POST', body:fd}).then(r=>r.json()).then(res=>{
                     if(res.status=='success'){
@@ -186,56 +198,64 @@
                 });
             },
 
-            initData: function() {
-                // Tải Folder trước, xong mới tải Link
-                this.loadFolders().then(() => this.loadLinks());
-            },
+            initData: function() { this.loadFolders().then(() => this.loadLinks()); },
 
             // --- FOLDER LOGIC ---
             loadFolders: function() {
                 return fetch(API + '?action=getFolders&mdd=' + this.userMDD).then(r=>r.json()).then(res=>{
-                    this.folders = res;
-                    this.renderFolders();
+                    this.folders = res; this.renderFolders();
                 });
             },
 
             renderFolders: function() {
-                const list = document.getElementById('folder-list');
-                list.innerHTML = "";
+                const list = document.getElementById('folder-list'); list.innerHTML = "";
                 if(this.folders.length == 0) list.innerHTML = `<p style="text-align:center; opacity:0.6; font-size:0.8rem; margin-top:10px">Chưa có thư mục.<br>Bấm + để tạo.</p>`;
                 
                 this.folders.forEach(f => {
+                    // Logic hiển thị icon: Nếu là link ảnh -> img, nếu không -> text (emoji)
+                    let iconHtml = f.icon && f.icon.startsWith('http') 
+                        ? `<img src="${f.icon}">` 
+                        : (f.icon || '📁');
+                    
                     list.innerHTML += `
                         <div class="menu-item" onclick="app.filter('${f.name}', this)">
-                            <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap"><i class="fas fa-folder" style="width:20px; color:#feca57"></i> ${f.name}</span>
-                            <i class="fas fa-trash del-folder" onclick="event.stopPropagation(); app.delFolder(${f.row}, '${f.name}')" title="Xóa thư mục"></i>
+                            <div style="display:flex; align-items:center; gap:10px; overflow:hidden;">
+                                <span class="f-icon">${iconHtml}</span>
+                                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.name}</span>
+                            </div>
+                            <div class="folder-actions">
+                                <i class="fas fa-pen fa-icon-btn" onclick="event.stopPropagation(); app.editFolder(${f.row}, '${f.name}', '${f.icon||''}')"></i>
+                                <i class="fas fa-trash fa-icon-btn del" onclick="event.stopPropagation(); app.delFolder(${f.row}, '${f.name}')"></i>
+                            </div>
                         </div>
                     `;
                 });
             },
 
             createFolder: function() {
-                const name = prompt("Nhập tên thư mục mới:");
-                if(!name) return;
-                // Kiểm tra trùng tên
-                if(this.folders.some(f => f.name.toLowerCase() == name.toLowerCase())) return alert("Thư mục đã tồn tại!");
-
-                // Optimistic UI update
-                const tempRow = 9999; 
-                this.folders.push({name: name, row: tempRow});
-                this.renderFolders();
-
-                const fd = new FormData(); fd.append('action', 'createFolder'); fd.append('name', name); fd.append('mdd', this.userMDD);
-                fetch(API, {method:'POST', body:fd}).then(()=> this.loadFolders()); // Load lại để lấy Row ID thật
+                const name = prompt("Nhập tên thư mục:"); if(!name) return;
+                const icon = prompt("Nhập Icon (Dán Emoji hoặc Link ảnh):", "📁");
+                
+                if(this.folders.some(f => f.name.toLowerCase() == name.toLowerCase())) return alert("Tên trùng!");
+                
+                this.folders.push({name: name, icon: icon, row: 9999}); this.renderFolders();
+                const fd = new FormData(); fd.append('action', 'createFolder'); fd.append('name', name); fd.append('icon', icon); fd.append('mdd', this.userMDD);
+                fetch(API, {method:'POST', body:fd}).then(()=> this.loadFolders());
                 this.toast(`Đã tạo: ${name}`);
             },
 
-            delFolder: function(row, name) {
-                if(!confirm(`Xóa thư mục "${name}"?\n(Các link trong thư mục này vẫn còn nhưng sẽ không thuộc thư mục nào)`)) return;
-                
-                this.folders = this.folders.filter(f => f.row != row);
-                this.renderFolders();
+            editFolder: function(row, oldName, oldIcon) {
+                const newName = prompt("Tên thư mục mới:", oldName); if(newName === null) return;
+                const newIcon = prompt("Icon mới (Emoji/Link):", oldIcon); if(newIcon === null) return;
 
+                const fd = new FormData(); fd.append('action', 'editFolder'); fd.append('row', row); fd.append('name', newName); fd.append('icon', newIcon);
+                fetch(API, {method:'POST', body:fd}).then(()=> { this.loadFolders(); this.loadLinks(); }); // Load link vì link có thể hiển thị tên Cate cũ
+                this.toast("Đang cập nhật...");
+            },
+
+            delFolder: function(row, name) {
+                if(!confirm(`Xóa thư mục "${name}"?`)) return;
+                this.folders = this.folders.filter(f => f.row != row); this.renderFolders();
                 const fd = new FormData(); fd.append('action', 'deleteFolder'); fd.append('row', row);
                 fetch(API, {method:'POST', body:fd});
                 this.toast("Đã xóa thư mục");
@@ -254,11 +274,19 @@
                 if(list.length==0) { grid.innerHTML = '<p style="text-align:center; width:100%; opacity:0.7">Chưa có link nào.</p>'; return;}
                 
                 list.forEach(i => {
-                    const icon = i[7] || "https://cdn-icons-png.flaticon.com/512/1006/1006771.png";
+                    const iconVal = i[7];
+                    // Kiểm tra icon là Ảnh hay Emoji để render đúng
+                    let iconHtml = "";
+                    if (iconVal && iconVal.startsWith('http')) {
+                        iconHtml = `<img src="${iconVal}" class="card-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1006/1006771.png'">`;
+                    } else {
+                        iconHtml = `<div class="card-emoji">${iconVal || '🔗'}</div>`;
+                    }
+
                     grid.innerHTML += `
                         <div class="card glass">
                             <div class="card-header">
-                                <img src="${icon}" class="card-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1006/1006771.png'">
+                                ${iconHtml}
                                 <div style="flex:1; overflow:hidden">
                                     <div class="card-title" title="${i[1]}">${i[1]}</div>
                                     <span class="card-tag">${i[3] || 'Chung'}</span>
@@ -281,11 +309,8 @@
             filter: function(cate, el) {
                 document.querySelectorAll('.menu-item').forEach(e=>e.classList.remove('active'));
                 el.classList.add('active');
-                // Nếu bấm Tất cả
                 if(cate=='all') { this.renderLinks(this.links); return; }
-                // Lọc theo folder
-                const filtered = this.links.filter(x=> x[3] == cate);
-                this.renderLinks(filtered);
+                this.renderLinks(this.links.filter(x=> x[3] == cate));
             },
 
             search: function() {
@@ -297,8 +322,7 @@
             openModal: function() {
                 this.isEdit = false; document.getElementById('modal-title').innerText = "Thêm Link Mới";
                 ['inp-url','inp-title','inp-desc','inp-icon'].forEach(id=>document.getElementById(id).value="");
-                this.populateCate(); // Điền danh sách folder vào Select
-                document.getElementById('modal-overlay').classList.add('active');
+                this.populateCate(); document.getElementById('modal-overlay').classList.add('active');
             },
 
             editModal: function(row) {
@@ -308,7 +332,7 @@
                 document.getElementById('inp-title').value = item[1];
                 document.getElementById('inp-url').value = item[2];
                 document.getElementById('inp-desc').value = item[6];
-                document.getElementById('inp-icon').value = item[7];
+                document.getElementById('inp-icon').value = item[7]; // Load icon cũ
                 
                 this.populateCate();
                 document.getElementById('inp-cate').value = item[3];
@@ -317,13 +341,8 @@
 
             populateCate: function() {
                 const sel = document.getElementById('inp-cate'); sel.innerHTML = "";
-                if(this.folders.length === 0) {
-                    sel.innerHTML = "<option value='Chung'>Chung</option>";
-                } else {
-                    this.folders.forEach(f => {
-                        sel.innerHTML += `<option value="${f.name}">${f.name}</option>`;
-                    });
-                }
+                if(this.folders.length === 0) sel.innerHTML = "<option value='Chung'>Chung</option>";
+                else this.folders.forEach(f => sel.innerHTML += `<option value="${f.name}">${f.name}</option>`);
             },
 
             fetchMeta: function() {
@@ -350,7 +369,7 @@
                 fd.append('mdd', this.userMDD); fd.append('url', u); fd.append('title', t);
                 fd.append('category', document.getElementById('inp-cate').value);
                 fd.append('desc', document.getElementById('inp-desc').value);
-                fd.append('icon', document.getElementById('inp-icon').value);
+                fd.append('icon', document.getElementById('inp-icon').value); // Lưu icon custom
                 
                 if(this.isEdit) { fd.append('action', 'editLink'); fd.append('row', document.getElementById('inp-row').value); }
                 else fd.append('action', 'addLink');
@@ -374,15 +393,8 @@
             toast: function(m) { const t=document.getElementById('toast'); t.innerText=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
         };
         
-        // Mobile Toggle sidebar fix
-        document.querySelector('.menu-toggle').onclick = () => {
-            document.getElementById('sidebar').classList.add('open');
-            document.getElementById('sidebar-overlay').style.display = 'block';
-        }
-        document.getElementById('sidebar-overlay').onclick = () => {
-            document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('sidebar-overlay').style.display = 'none';
-        }
+        document.querySelector('.menu-toggle').onclick = () => { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebar-overlay').style.display = 'block'; }
+        document.getElementById('sidebar-overlay').onclick = () => { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').style.display = 'none'; }
     </script>
 </body>
 </html>
